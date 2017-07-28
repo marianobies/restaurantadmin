@@ -1,18 +1,87 @@
-<ion-header>
-  <ion-navbar>
+<ion-header color="dark">
+  <ion-navbar color="dark">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Pedidos</ion-title>
+    <ion-buttons end>
+      <ion-item no-lines color="dark">
+        <ion-label>Estados de los pedidos</ion-label>
+        <ion-select [(ngModel)]="gaming2" okText="Okay!">
+          <ion-option value="nes">Pendientes</ion-option>
+          <ion-option value="n64">En Cocina</ion-option>
+          <ion-option value="ps">Entregado</ion-option>
+          <ion-option value="genesis">Cancelado</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-buttons>
+    <ion-buttons end>
+      <ion-item no-lines color="dark">
+        <ion-avatar item-end (click)="popoverMenu($event)">
+          <img src="https://saleinbahrain.com/oc-content/plugins/profile_picture/no_picture.jpg">
+          <ion-badge item-end color="danger">5</ion-badge>
+        </ion-avatar>
+        <h3>Mariano Dominguez</h3>
+
+      </ion-item>
+
+    </ion-buttons>
   </ion-navbar>
+  <ion-toolbar color="dark">
+    <ion-searchbar placeholder="Buscar..."></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-sm-6 col-md-4 col-lg-3 *ngFor="let pedido of items" (mouseover)="buttonRemove[pedido._id] = true" (mouseout)="buttonRemove[pedido._id] = false">
+        <ion-card >
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+          <ion-list>
+            <ion-item-group>
+              <ion-item-divider color="light">Mesa #{{pedido.nombre}}
+                <ion-icon name="ios-trash-outline" color="danger" item-end style="cursor:pointer;margin-bottom:0 !important; margin-top:0 !important" (click)="remove(pedido)" [hidden]="!buttonRemove[pedido._id]"></ion-icon>
+              </ion-item-divider>
+              <ion-item>
+                <h1>$500</h1>
+                <h3>Pedido #{{pedido._id}}</h3>
+                <p>Tiempo del pedido: {{tiempo}}</p>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+          <ion-row>
+            <ion-col>
+              <button ion-button icon-left clear small>
+                <ion-icon name="eye"></ion-icon>
+                <div>Ver pedido</div>
+              </button>
+            </ion-col>
+            <ion-col>
+              <button ion-button icon-left clear small>
+              <ion-icon name="print"></ion-icon>
+              <div>Imprimir ticket</div>
+            </button>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+      <ion-col col-sm-6 col-md-4 col-lg-3>
+        <ion-card style="opacity: 0.5;" (click)="createTodo()">
+
+          <ion-list>
+            <ion-item-group>
+              <ion-item-divider color="light">
+              </ion-item-divider>
+              <ion-item text-center>
+                <ion-icon name="add" style="cursor:pointer;font-size:10.7em"></ion-icon>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
